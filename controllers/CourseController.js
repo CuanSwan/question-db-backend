@@ -25,7 +25,7 @@ export const addLessons = async (req, res) => {
 
 export const getCourses = async (req, res) => {
   await Course.find({category: { $regex: new RegExp('^' + req.params.courseCat + '$', 'i') }}).then((c) => {
-    console.log(res)
+    console.log('Course found')
     res.status(201).json(c)
   }).catch(
     err => {
