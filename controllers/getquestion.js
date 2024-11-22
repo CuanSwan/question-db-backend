@@ -1,7 +1,6 @@
 
 
 const getquestion = (req, res) => {
-    console.log(`${req.method} ${req.baseUrl} `); 
     if (req.params.quesnum === "1"){
         res.json({
             "title": `Python - Lesson ${req.params.quesnum}`,
