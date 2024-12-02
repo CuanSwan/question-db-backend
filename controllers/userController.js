@@ -10,12 +10,18 @@ export const userLogin = async (req, res) => {
     const passMatch = await bcrypt.compare(password, userExists.password)
     if(userExists && passMatch){
         console.log('UserFound')
-        const token = jwt.sign({email}, process.env.SECRET, {expiresIn: "5h"})
+        console.log(userExists)
+        const token = jwt.sign({email, role}, process.env.SECRET, {expiresIn: "5h"})
         res.status(200).json(token)
     }else{
         res.send('Email or password incorrect.')
     }
+}
+
+export const fetchuser = async (req, res) => {
+    const token = req.header('Authorization');
     
+    res.send(202)
 }
 
 export const userRegister = async (req, res) => {
@@ -30,6 +36,7 @@ export const userRegister = async (req, res) => {
         user.createdAt = new Date.toUTCString();
         user.progress = 0;
         user.token = "";
+        user.active = true;
         user.password = await bcrypt.hash(user.password, 10)
         console.log(user);
         try{

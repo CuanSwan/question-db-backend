@@ -29,10 +29,10 @@ import { verifyToken } from './middleware/verifyToken.js';
 app.get('/api/exams', exam);
 app.post('/user/login', userLogin);
 app.post('/user/register', userRegister);
-app.get('/python/:quesnum', getquestion);
-app.get('/courses/:courseCat',verifyToken, getCourses)
-app.post('/admin/save/lessons', addLessons)
-app.post('/admin/create/course', createCourse)
+app.get('/python/:quesnum', verifyToken("paid"), getquestion);
+app.get('/courses/:courseCat', verifyToken("paid"), getCourses);
+app.post('/admin/save/lessons', verifyToken("admin"), addLessons);
+app.post('/admin/create/course', verifyToken("admin"), createCourse);
 
  
 app.listen(PORT, () => {

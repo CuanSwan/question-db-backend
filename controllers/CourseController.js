@@ -32,5 +32,4 @@ export const getCourses = async (req, res) => {
       console.error(err)
     }
   )
-  
-}
+} 
