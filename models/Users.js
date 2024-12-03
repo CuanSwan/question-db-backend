@@ -6,6 +6,8 @@ const userSchema = new Schema({
     email: String,
     course: Object,
     progress: Object,
+    active: Boolean,
+    role: String,
     password: String,
     createdAt: String,
     token: String

@@ -4,8 +4,9 @@ import cors from 'cors';
 import 'dotenv/config'
 import getquestion from './controllers/getquestion.js';
 import {createCourse,addLessons,getCourses} from './controllers/CourseController.js';
-import { userLogin, userRegister } from './controllers/userController.js';
+import { userLogin, userRegister, fetchUser } from './controllers/userController.js';
 import morgan from 'morgan';
+ 
 
 const app = express();
 const PORT = process.env.PORT;
@@ -28,11 +29,12 @@ import exam  from './routes/exams.js';
 import { verifyToken } from './middleware/verifyToken.js';
 app.get('/api/exams', exam);
 app.post('/user/login', userLogin);
-app.post('/user/register', userRegister);
-app.get('/python/:quesnum', getquestion);
-app.get('/courses/:courseCat',verifyToken, getCourses)
-app.post('/admin/save/lessons', addLessons)
-app.post('/admin/create/course', createCourse)
+app.get('/user/fetch', fetchUser)
+app.get('/python/:quesnum', verifyToken("paid"), getquestion);
+app.get('/courses/:courseCat', verifyToken("paid"), getCourses);
+app.post('/admin/save/lessons', verifyToken("admin"), addLessons);
+app.post('/admin/create/course', verifyToken("admin"), createCourse);
+app.post('/admin/register', userRegister);
 
  
 app.listen(PORT, () => {
