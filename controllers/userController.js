@@ -23,9 +23,9 @@ export const fetchUser = async (req, res) => {
     const token = req.header('Authorization')
     const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.SECRET);
     const usermail = decoded.email;
-    console.log(decoded.email)
     const user = await User.findOne({email:usermail})
-    console.log(user)
+    delete user.password
+    delete user.email
     res.status(202).json(user)
 }
 
@@ -42,7 +42,6 @@ export const userRegister = async (req, res) => {
         user.token = "";
         user.active = true;
         user.password = await bcrypt.hash(user.password, 10)
-        console.log(user);
         try{
             await User.create(user)
             res.status(200).send("OK");
