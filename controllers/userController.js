@@ -24,9 +24,15 @@ export const fetchUser = async (req, res) => {
     const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.SECRET);
     const usermail = decoded.email;
     const user = await User.findOne({email:usermail})
-    delete user.password
-    delete user.email
-    res.status(202).json(user)
+    const safeData = {
+        active: user.active,
+        course: user.course,
+        role: user.role,
+        startDate: user.createdAt
+
+
+    }
+    res.status(202).json(safeData)
 }
 
 export const userRegister = async (req, res) => {
