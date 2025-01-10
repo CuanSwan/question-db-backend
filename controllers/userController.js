@@ -2,8 +2,6 @@ import jwt from 'jsonwebtoken';
 import User from '../models/Users.js';
 import bcrypt from 'bcrypt';
 
-
- 
 export const userLogin = async (req, res) => {
     const { email, password } = req.body;
     const userExists = await User.findOne({email})
@@ -13,20 +11,27 @@ export const userLogin = async (req, res) => {
         console.log('UserFound')
         console.log(userExists)
         const token = jwt.sign({email, role}, process.env.SECRET, {expiresIn: "5h"})
-        res.status(200).json(token)
+        res.status(200).json({"token": token})
     }else{
         res.send('Email or password incorrect.')
     }
 }
 
 export const fetchUser = async (req, res) => {
-    const token = req.header('Authorization')
-    const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.SECRET);
+    const token = req.header("Authorization");
+    console.log(token)
+    const decoded = jwt.verify(token.replace("Bearer ", ""), process.env.SECRET);
+    console.log(decoded)
     const usermail = decoded.email;
     const user = await User.findOne({email:usermail})
-    delete user.password
-    delete user.email
-    res.status(202).json(user)
+    const userData = {
+        email: user.email,
+        role: user.role,
+        course: user.course,
+        progress: user.progress,
+        active: user.active
+    }
+    res.status(202).json(userData)
 }
 
 export const userRegister = async (req, res) => {
