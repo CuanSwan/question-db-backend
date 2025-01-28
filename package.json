@@ -2,8 +2,11 @@
   "name": "question-db-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./bin/server.js",
   "type": "module",
+  "bin": {
+    "qdb": "./bin/server.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "npm run build",
@@ -18,9 +21,11 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "exxpress": "^1.0.0",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "yargs": "^17.7.2"
   }
 }
