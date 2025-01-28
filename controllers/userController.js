@@ -32,7 +32,7 @@ export const fetchUser = async (req, res) => {
         active: user.active
     }
     res.status(202).json(userData)
-}
+
 
 export const userRegister = async (req, res) => {
     const user = req.body;
