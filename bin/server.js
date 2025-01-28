@@ -14,7 +14,7 @@ const PORT = process.env.PORT;
  
 app.use(cors());
 app.use(json());
-app.use(morgan(':method :url :status :response-time ms - :res[content-length]'));
+app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length]'));
  
 mongoose.connect("mongodb://localhost:27017/courses")
 
